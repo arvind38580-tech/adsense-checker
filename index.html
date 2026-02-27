@@ -241,11 +241,12 @@ return;
 
 document.getElementById("loader").style.display="block";
 document.getElementById("report").style.display="none";
+document.getElementById("checks").innerHTML="";
 
 setTimeout(function(){
 document.getElementById("loader").style.display="none";
 generateReport(url);
-},4000);
+},1500);
 }
 
 function randomPass(chance=0.75){
@@ -257,40 +258,31 @@ function generateReport(url){
 let score=Math.floor(Math.random()*25)+75;
 document.getElementById("score").innerHTML="Overall Score: "+score+"/100";
 
-let categories = {
-"🔒 Security Checks":[
+let checks=[
 ["HTTPS Enabled", url.startsWith("https")],
 ["SSL Certificate Valid", randomPass()],
 ["Mixed Content Issues", randomPass()],
 ["Secure Headers", randomPass()],
-["Malware Risk", randomPass(0.9)]
-],
+["Malware Risk", randomPass(0.9)],
 
-"🌐 Domain Checks":[
 ["Valid Domain Format", url.includes(".")],
 ["Custom Domain", !url.includes("blogspot") && !url.includes("wordpress")],
 ["Subdomain Detection", randomPass()],
 ["Domain Age Estimate", randomPass()],
-["DNS Configuration", randomPass()]
-],
+["DNS Configuration", randomPass()],
 
-"📄 Policy Pages":[
 ["Privacy Policy", randomPass()],
 ["About Page", randomPass()],
 ["Contact Page", randomPass()],
 ["Terms & Conditions", randomPass()],
-["Disclaimer Page", randomPass()]
-],
+["Disclaimer Page", randomPass()],
 
-"✍ Content Quality":[
 ["Minimum Content Length", randomPass()],
 ["Plagiarism Risk", randomPass(0.85)],
 ["Adult Content Risk", randomPass(0.9)],
 ["Copyright Risk", randomPass(0.85)],
-["AI Generated Risk", randomPass()]
-],
+["AI Generated Risk", randomPass()],
 
-"📱 SEO & UX":[
 ["Meta Title", randomPass()],
 ["Meta Description", randomPass()],
 ["H1 Tag Present", randomPass()],
@@ -301,220 +293,41 @@ let categories = {
 ["Robots.txt Found", randomPass()],
 ["Internal Linking", randomPass()],
 ["Navigation Structure", randomPass()]
-]
-};
+];
 
-let checksHTML="";
+let index=0;
+let container=document.getElementById("checks");
 
-for (let category in categories){
-checksHTML+=`<h3 style="margin-top:25px;color:#00ffcc">${category}</h3>`;
+function showNextCheck(){
+if(index<checks.length){
 
-categories[category].forEach(function(item){
-let status=item[1];
-checksHTML+=`
-<div class="check">
-${item[0]}:
+let status=checks[index][1];
+let div=document.createElement("div");
+div.className="check";
+div.style.opacity="0";
+div.style.marginTop="8px";
+div.innerHTML=`
+${checks[index][0]}:
 <span style="color:${status?'#00ffcc':'red'};font-weight:bold;">
-${status?'Passed':'Failed'}
+${status?'Passed ✔':'Failed ✖'}
 </span>
-</div>
 `;
-});
+
+container.appendChild(div);
+
+setTimeout(()=>{div.style.opacity="1";div.style.transition="0.4s";},50);
+
+index++;
+setTimeout(showNextCheck,250);
+}
 }
 
-document.getElementById("checks").innerHTML=checksHTML;
 document.getElementById("report").style.display="block";
-}
-</script><script>
-function scanSite(){
-let url=document.getElementById("urlInput").value;
-if(url===""){
-alert("Please enter a website URL");
-return;
-}
-
-document.getElementById("loader").style.display="block";
-document.getElementById("report").style.display="none";
-
-setTimeout(function(){
-document.getElementById("loader").style.display="none";
-generateReport(url);
-},4000);
-}
-
-function randomPass(chance=0.75){
-return Math.random()<chance;
-}
-
-function generateReport(url){
-
-let score=Math.floor(Math.random()*25)+75;
-document.getElementById("score").innerHTML="Overall Score: "+score+"/100";
-
-let categories = {
-"🔒 Security Checks":[
-["HTTPS Enabled", url.startsWith("https")],
-["SSL Certificate Valid", randomPass()],
-["Mixed Content Issues", randomPass()],
-["Secure Headers", randomPass()],
-["Malware Risk", randomPass(0.9)]
-],
-
-"🌐 Domain Checks":[
-["Valid Domain Format", url.includes(".")],
-["Custom Domain", !url.includes("blogspot") && !url.includes("wordpress")],
-["Subdomain Detection", randomPass()],
-["Domain Age Estimate", randomPass()],
-["DNS Configuration", randomPass()]
-],
-
-"📄 Policy Pages":[
-["Privacy Policy", randomPass()],
-["About Page", randomPass()],
-["Contact Page", randomPass()],
-["Terms & Conditions", randomPass()],
-["Disclaimer Page", randomPass()]
-],
-
-"✍ Content Quality":[
-["Minimum Content Length", randomPass()],
-["Plagiarism Risk", randomPass(0.85)],
-["Adult Content Risk", randomPass(0.9)],
-["Copyright Risk", randomPass(0.85)],
-["AI Generated Risk", randomPass()]
-],
-
-"📱 SEO & UX":[
-["Meta Title", randomPass()],
-["Meta Description", randomPass()],
-["H1 Tag Present", randomPass()],
-["Image Alt Tags", randomPass()],
-["Mobile Friendly", randomPass()],
-["Page Speed Estimate", randomPass()],
-["Sitemap Found", randomPass()],
-["Robots.txt Found", randomPass()],
-["Internal Linking", randomPass()],
-["Navigation Structure", randomPass()]
-]
-};
-
-let checksHTML="";
-
-for (let category in categories){
-checksHTML+=`<h3 style="margin-top:25px;color:#00ffcc">${category}</h3>`;
-
-categories[category].forEach(function(item){
-let status=item[1];
-checksHTML+=`
-<div class="check">
-${item[0]}:
-<span style="color:${status?'#00ffcc':'red'};font-weight:bold;">
-${status?'Passed':'Failed'}
-</span>
-</div>
-`;
-});
-}
-
-document.getElementById("checks").innerHTML=checksHTML;
-document.getElementById("report").style.display="block";
-}
-</script><script>
-function scanSite(){
-let url=document.getElementById("urlInput").value;
-if(url===""){
-alert("Please enter a website URL");
-return;
-}
-
-document.getElementById("loader").style.display="block";
-document.getElementById("report").style.display="none";
-
-setTimeout(function(){
-document.getElementById("loader").style.display="none";
-generateReport(url);
-},4000);
-}
-
-function randomPass(chance=0.75){
-return Math.random()<chance;
-}
-
-function generateReport(url){
-
-let score=Math.floor(Math.random()*25)+75;
-document.getElementById("score").innerHTML="Overall Score: "+score+"/100";
-
-let categories = {
-"🔒 Security Checks":[
-["HTTPS Enabled", url.startsWith("https")],
-["SSL Certificate Valid", randomPass()],
-["Mixed Content Issues", randomPass()],
-["Secure Headers", randomPass()],
-["Malware Risk", randomPass(0.9)]
-],
-
-"🌐 Domain Checks":[
-["Valid Domain Format", url.includes(".")],
-["Custom Domain", !url.includes("blogspot") && !url.includes("wordpress")],
-["Subdomain Detection", randomPass()],
-["Domain Age Estimate", randomPass()],
-["DNS Configuration", randomPass()]
-],
-
-"📄 Policy Pages":[
-["Privacy Policy", randomPass()],
-["About Page", randomPass()],
-["Contact Page", randomPass()],
-["Terms & Conditions", randomPass()],
-["Disclaimer Page", randomPass()]
-],
-
-"✍ Content Quality":[
-["Minimum Content Length", randomPass()],
-["Plagiarism Risk", randomPass(0.85)],
-["Adult Content Risk", randomPass(0.9)],
-["Copyright Risk", randomPass(0.85)],
-["AI Generated Risk", randomPass()]
-],
-
-"📱 SEO & UX":[
-["Meta Title", randomPass()],
-["Meta Description", randomPass()],
-["H1 Tag Present", randomPass()],
-["Image Alt Tags", randomPass()],
-["Mobile Friendly", randomPass()],
-["Page Speed Estimate", randomPass()],
-["Sitemap Found", randomPass()],
-["Robots.txt Found", randomPass()],
-["Internal Linking", randomPass()],
-["Navigation Structure", randomPass()]
-]
-};
-
-let checksHTML="";
-
-for (let category in categories){
-checksHTML+=`<h3 style="margin-top:25px;color:#00ffcc">${category}</h3>`;
-
-categories[category].forEach(function(item){
-let status=item[1];
-checksHTML+=`
-<div class="check">
-${item[0]}:
-<span style="color:${status?'#00ffcc':'red'};font-weight:bold;">
-${status?'Passed':'Failed'}
-</span>
-</div>
-`;
-});
-}
-
-document.getElementById("checks").innerHTML=checksHTML;
-document.getElementById("report").style.display="block";
+showNextCheck();
 }
 </script>
 
 </body>
 </html>
+
 

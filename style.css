@@ -1,0 +1,90 @@
+body{
+margin:0;
+font-family: 'Segoe UI', sans-serif;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+padding:20px 10%;
+background:rgba(0,0,0,0.3);
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+font-weight:500;
+}
+
+.container{
+max-width:900px;
+margin:60px auto;
+background:white;
+color:black;
+padding:40px;
+border-radius:15px;
+box-shadow:0 20px 50px rgba(0,0,0,0.4);
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:15px;
+border-radius:8px;
+border:1px solid #ccc;
+margin-bottom:15px;
+}
+
+button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:8px;
+background:#28a745;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#218838;
+}
+
+.loading{
+display:none;
+text-align:center;
+margin-top:20px;
+}
+
+.spinner{
+border:5px solid #f3f3f3;
+border-top:5px solid #28a745;
+border-radius:50%;
+width:40px;
+height:40px;
+animation:spin 1s linear infinite;
+margin:20px auto;
+}
+
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+.report{
+display:none;
+margin-top:20px;
+}
+
+footer{
+text-align:center;
+padding:40px;
+opacity:0.7;
+}

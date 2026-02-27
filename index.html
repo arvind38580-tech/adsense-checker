@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AdSense Approval Checker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#1e3c72,#2a5298);
+color:white;
+text-align:center;
+padding:40px 20px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+background:white;
+color:black;
+padding:30px;
+border-radius:15px;
+box-shadow:0 15px 40px rgba(0,0,0,0.3);
+}
+
+h1{
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:15px;
+margin-bottom:15px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:16px;
+}
+
+button{
+background:#28a745;
+color:white;
+padding:15px 25px;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#218838;
+}
+
+.report{
+margin-top:20px;
+text-align:left;
+display:none;
+}
+
+.score{
+font-size:28px;
+font-weight:bold;
+text-align:center;
+margin-bottom:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>AdSense Website Checker</h1>
+
+<input type="text" id="url" placeholder="Enter website URL">
+<button onclick="scan()">Check Now</button>
+
+<div class="report" id="report">
+<div class="score" id="score"></div>
+<div id="details"></div>
+</div>
+
+</div>
+
+<script>
+function scan(){
+let url=document.getElementById("url").value;
+let score=0;
+let report="";
+
+if(!url.startsWith("http")){
+alert("Enter full URL including https://");
+return;
+}
+
+if(url.startsWith("https")){
+score+=20;
+report+="? HTTPS Enabled<br>";
+}else{
+report+="? Not Secure (No HTTPS)<br>";
+}
+
+if(url.length>10){
+score+=20;
+report+="? Valid URL Format<br>";
+}
+
+if(url.includes(".")){
+score+=20;
+report+="? Domain Detected<br>";
+}
+
+if(url.includes("blogspot")){
+report+="? Using Free Subdomain (Custom domain recommended)<br>";
+}else{
+score+=20;
+report+="? Custom Domain<br>";
+}
+
+score+=20; // base content score simulation
+
+document.getElementById("report").style.display="block";
+
+let color="red";
+if(score>70) color="green";
+else if(score>40) color="orange";
+
+document.getElementById("score").innerHTML=
+`Score: <span style="color:${color}">${score}/100</span>`;
+
+document.getElementById("details").innerHTML=report;
+}
+</script>
+
+</body>
+</html>
